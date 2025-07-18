@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from "@/components/Footer";
 import { OfflineIndicator } from "@/components/offline-indicator";
 import { PWAInstallPrompt } from "@/components/pwa-install-prompt";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -362,7 +363,7 @@ const App: React.FC = () => {
         {/* Header - Responsive text sizing */}
         <div className="text-center px-2">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">
-            Photo Uploader PWA
+            Photo Uploader By Shohan
           </h1>
           <p className="text-sm sm:text-base text-gray-600">
             Upload multiple images with progress tracking - works offline
@@ -736,9 +737,9 @@ const App: React.FC = () => {
         </Card>
       </div>
 
-      {/* PWA Components */}
       <PWAInstallPrompt />
       <OfflineIndicator />
+      <Footer />
     </div>
   );
 };

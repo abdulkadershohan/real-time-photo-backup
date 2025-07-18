@@ -1,12 +1,12 @@
-import type React from "react"
-import type { Metadata, Viewport } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
+import type React from "react";
+import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Photo Uploader PWA",
+  title: "Photo Uploader By Shohan",
   description: "Upload multiple images with progress tracking - works offline",
   manifest: "/manifest.json",
   appleWebApp: {
@@ -19,17 +19,19 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    siteName: "Photo Uploader PWA",
-    title: "Photo Uploader PWA",
-    description: "Upload multiple images with progress tracking - works offline",
+    siteName: "Photo Uploader By Shohan",
+    title: "Photo Uploader By Shohan",
+    description:
+      "Upload multiple images with progress tracking - works offline",
   },
   twitter: {
     card: "summary",
-    title: "Photo Uploader PWA",
-    description: "Upload multiple images with progress tracking - works offline",
+    title: "Photo Uploader By Shohan",
+    description:
+      "Upload multiple images with progress tracking - works offline",
   },
-    generator: 'v0.dev'
-}
+  generator: "v0.dev",
+};
 
 export const viewport: Viewport = {
   themeColor: "#3b82f6",
@@ -37,12 +39,12 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -76,5 +78,5 @@ export default function RootLayout({
         />
       </body>
     </html>
-  )
+  );
 }
