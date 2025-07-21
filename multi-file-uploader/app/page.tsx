@@ -1,4 +1,6 @@
 "use client";
+const PORT = 4000;
+const API_ENDPOINT = `http://192.168.0.101:${PORT}/upload`;
 
 import Footer from "@/components/Footer";
 import { OfflineIndicator } from "@/components/offline-indicator";
@@ -240,63 +242,59 @@ const App: React.FC = () => {
       let lastTime = startTime;
       let lastLoaded = 0;
 
-      const response = await axios.post(
-        "http://192.168.0.101:3000/upload",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-          onUploadProgress: (progressEvent) => {
-            if (progressEvent.total) {
-              const currentTime = Date.now();
-              const timeElapsed = (currentTime - startTime) / 1000; // seconds
-              const timeSinceLastUpdate = (currentTime - lastTime) / 1000; // seconds
-              const progress = Math.round(
-                (progressEvent.loaded * 100) / progressEvent.total
-              );
-              const uploadedBytes = progressEvent.loaded;
+      const response = await axios.post(API_ENDPOINT, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        onUploadProgress: (progressEvent) => {
+          if (progressEvent.total) {
+            const currentTime = Date.now();
+            const timeElapsed = (currentTime - startTime) / 1000; // seconds
+            const timeSinceLastUpdate = (currentTime - lastTime) / 1000; // seconds
+            const progress = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            const uploadedBytes = progressEvent.loaded;
 
-              // Calculate speed (bytes per second)
-              let currentSpeed = 0;
-              if (timeSinceLastUpdate > 0) {
-                const bytesInInterval = uploadedBytes - lastLoaded;
-                currentSpeed = bytesInInterval / timeSinceLastUpdate;
-              }
-
-              // Calculate average speed
-              const averageSpeed =
-                timeElapsed > 0 ? uploadedBytes / timeElapsed : 0;
-
-              // Calculate estimated time remaining
-              const remainingBytes = totalBytes - uploadedBytes;
-              const estimatedTimeRemaining =
-                averageSpeed > 0 ? remainingBytes / averageSpeed : 0;
-
-              setUploadProgress(progress);
-              setUploadStats((prev) => ({
-                ...prev!,
-                uploadedBytes,
-                speed: averageSpeed,
-                estimatedTimeRemaining,
-              }));
-
-              // Update individual file progress
-              setFiles((prev) =>
-                prev.map((f) => ({
-                  ...f,
-                  progress: progress,
-                  status:
-                    progress === 100
-                      ? ("completed" as const)
-                      : ("uploading" as const),
-                }))
-              );
-
-              lastTime = currentTime;
-              lastLoaded = uploadedBytes;
+            // Calculate speed (bytes per second)
+            let currentSpeed = 0;
+            if (timeSinceLastUpdate > 0) {
+              const bytesInInterval = uploadedBytes - lastLoaded;
+              currentSpeed = bytesInInterval / timeSinceLastUpdate;
             }
-          },
-        }
-      );
+
+            // Calculate average speed
+            const averageSpeed =
+              timeElapsed > 0 ? uploadedBytes / timeElapsed : 0;
+
+            // Calculate estimated time remaining
+            const remainingBytes = totalBytes - uploadedBytes;
+            const estimatedTimeRemaining =
+              averageSpeed > 0 ? remainingBytes / averageSpeed : 0;
+
+            setUploadProgress(progress);
+            setUploadStats((prev) => ({
+              ...prev!,
+              uploadedBytes,
+              speed: averageSpeed,
+              estimatedTimeRemaining,
+            }));
+
+            // Update individual file progress
+            setFiles((prev) =>
+              prev.map((f) => ({
+                ...f,
+                progress: progress,
+                status:
+                  progress === 100
+                    ? ("completed" as const)
+                    : ("uploading" as const),
+              }))
+            );
+
+            lastTime = currentTime;
+            lastLoaded = uploadedBytes;
+          }
+        },
+      });
 
       const endTime = Date.now();
       const totalTime = endTime - startTime;

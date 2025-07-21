@@ -1,4 +1,5 @@
 const BASE_UPLOAD_DIR = "D:/Shohan/backup_images";
+const PORT = 4000;
 
 const express = require("express");
 const multer = require("multer");
@@ -38,6 +39,6 @@ app.post("/upload", upload.array("photos"), (req, res) => {
   }
 });
 
-app.listen(3000, () =>
-  console.log("Server running at http://192.168.0.101:3000")
+app.listen(PORT, () =>
+  console.log(`Server running at http://192.168.0.101:${PORT}`)
 );
