@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { BASE_URL } from "@/config";
 import axios from "axios";
 import {
   AlertCircle,
@@ -71,15 +72,15 @@ const PhotosPage: React.FC = () => {
     setIsSelectionMode(false);
 
     try {
-      const response = await axios.get("http://192.168.0.101:3001/photos", {
+      const response = await axios.get(`${BASE_URL}/photos`, {
         params: { dir: directory.trim() },
       });
 
       const photoFiles: PhotoFile[] = response.data.files.map(
         (filename: string) => ({
           name: filename,
-          url: `http://192.168.0.101:3001/files/${directory.trim()}/${filename}`,
-          downloadUrl: `http://192.168.0.101:3001/download/${directory.trim()}/${filename}`,
+          url: `${BASE_URL}/files/${directory.trim()}/${filename}`,
+          downloadUrl: `${BASE_URL}/download/${directory.trim()}/${filename}`,
         })
       );
 

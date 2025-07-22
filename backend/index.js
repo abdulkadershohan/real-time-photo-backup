@@ -1,7 +1,11 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const BASE_UPLOAD_DIR = "D:/Shohan/backup_images";
-const PORT = 3001;
+const PORT = process.env.PORT || 4001;
 
 const express = require("express");
+
 const multer = require("multer");
 const cors = require("cors");
 const path = require("path");
