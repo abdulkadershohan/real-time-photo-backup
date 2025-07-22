@@ -1,7 +1,8 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
-const BASE_UPLOAD_DIR = "D:/Shohan/backup_images";
+const BASE_UPLOAD_DIR =
+  process.env.BASE_UPLOAD_DIR || "D:/Shohan/backup_images";
 const PORT = process.env.PORT || 4001;
 
 const express = require("express");
