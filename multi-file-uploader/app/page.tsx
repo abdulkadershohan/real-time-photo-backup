@@ -1,6 +1,4 @@
 "use client";
-const PORT = 4001;
-const API_ENDPOINT = `http://192.168.0.101:${PORT}/upload`;
 
 import Footer from "@/components/Footer";
 import { OfflineIndicator } from "@/components/offline-indicator";
@@ -12,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
+import { BASE_URL } from "@/config";
 import axios from "axios";
 import {
   AlertCircle,
@@ -29,6 +28,8 @@ import Link from "next/link";
 import type React from "react";
 import type { ChangeEvent } from "react";
 import { useCallback, useEffect, useState } from "react";
+
+const API_ENDPOINT = `${BASE_URL}/upload`;
 
 interface FileWithProgress {
   file: File;

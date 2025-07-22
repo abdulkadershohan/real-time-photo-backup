@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { BASE_URL } from "@/config";
 import axios from "axios";
 import {
   AlertCircle,
@@ -71,15 +72,15 @@ const PhotosPage: React.FC = () => {
     setIsSelectionMode(false);
 
     try {
-      const response = await axios.get("http://192.168.0.101:3001/photos", {
+      const response = await axios.get(`${BASE_URL}/photos`, {
         params: { dir: directory.trim() },
       });
 
       const photoFiles: PhotoFile[] = response.data.files.map(
         (filename: string) => ({
           name: filename,
-          url: `http://192.168.0.101:3001/files/${directory.trim()}/${filename}`,
-          downloadUrl: `http://192.168.0.101:3001/download/${directory.trim()}/${filename}`,
+          url: `${BASE_URL}/files/${directory.trim()}/${filename}`,
+          downloadUrl: `${BASE_URL}/download/${directory.trim()}/${filename}`,
         })
       );
 
@@ -267,25 +268,6 @@ const PhotosPage: React.FC = () => {
             </Button>
           </div>
         </div>
-
-        {/* CORS Warning */}
-        <Alert className="border-yellow-200 bg-yellow-50 mx-2 sm:mx-0">
-          <AlertCircle className="h-4 w-4 text-yellow-600" />
-          <AlertDescription className="text-yellow-800 text-sm">
-            <strong>Server Setup Required:</strong> To view and download images,
-            your server needs these endpoints:
-            <br />
-            <code className="text-xs bg-yellow-100 px-1 rounded">
-              GET /files/:dir/:filename
-            </code>{" "}
-            - Serve images with proper CORS headers
-            <br />
-            <code className="text-xs bg-yellow-100 px-1 rounded">
-              GET /download/:dir/:filename
-            </code>{" "}
-            - Download files with attachment headers
-          </AlertDescription>
-        </Alert>
 
         {/* Directory Input Card */}
         <Card className="shadow-lg mx-2 sm:mx-0">
@@ -541,7 +523,8 @@ const PhotosPage: React.FC = () => {
                       />
 
                       {/* Hover Actions (only in non-selection mode) */}
-                      {!isSelectionMode && (
+                      {/* //! Uncomment show the grid image hover view and download button */}
+                      {/* {!isSelectionMode && (
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
                           <div className="flex gap-3">
                             <Button
@@ -568,7 +551,7 @@ const PhotosPage: React.FC = () => {
                             </Button>
                           </div>
                         </div>
-                      )}
+                      )} */}
 
                       {/* Filename overlay */}
                       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -752,14 +735,47 @@ const PhotosPage: React.FC = () => {
                   "/placeholder.svg?height=400&width=400&text=Image+Load+Error";
               }}
             />
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={closePhotoModal}
-              className="absolute top-4 right-4 p-2 bg-white/90 hover:bg-white text-gray-700 backdrop-blur-sm shadow-lg rounded-full"
-            >
-              <X className="h-4 w-4" />
-            </Button>
+
+            {/* Action Buttons */}
+            <div className="absolute top-4 right-4 flex items-center gap-2">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // Find the photo object for download
+                  const photo = filteredPhotos.find(
+                    (p) => p.url === selectedPhoto
+                  );
+                  if (photo) {
+                    downloadSinglePhoto(photo);
+                  }
+                }}
+                className="p-2 bg-white/90 hover:bg-white text-gray-700 backdrop-blur-sm shadow-lg rounded-full transition-all duration-200 hover:scale-110"
+              >
+                <Download className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // Open in new tab for full view
+                  window.open(selectedPhoto, "_blank");
+                }}
+                className="p-2 bg-white/90 hover:bg-white text-gray-700 backdrop-blur-sm shadow-lg rounded-full transition-all duration-200 hover:scale-110"
+              >
+                <Eye className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={closePhotoModal}
+                className="p-2 bg-white/90 hover:bg-white text-gray-700 backdrop-blur-sm shadow-lg rounded-full"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
       )}
