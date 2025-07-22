@@ -19,11 +19,13 @@ import {
   Clock,
   FileImage,
   Folder,
+  Images,
   Loader2,
   Upload,
   X,
   Zap,
 } from "lucide-react";
+import Link from "next/link";
 import type React from "react";
 import type { ChangeEvent } from "react";
 import { useCallback, useEffect, useState } from "react";
@@ -360,6 +362,15 @@ const App: React.FC = () => {
       <div className="max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto space-y-4 sm:space-y-6">
         {/* Header - Responsive text sizing */}
         <div className="text-center px-2">
+          <Link href="/photos">
+            <Button
+              variant="outline"
+              className="text-blue-600 hover:text-blue-800 bg-transparent"
+            >
+              <Images className="h-4 w-4 mr-2" />
+              View Photos
+            </Button>
+          </Link>
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">
             Photo Uploader By Shohan
           </h1>
