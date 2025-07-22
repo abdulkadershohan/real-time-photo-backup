@@ -1,9 +1,9 @@
 @echo off
 
 cd /d "%~dp0backend"
-start cmd /k "node index"
+start "" /b node index
 
 cd /d "%~dp0multi-file-uploader"
-start cmd /k "npm start"
+start "" /b npm start
 
 exit
