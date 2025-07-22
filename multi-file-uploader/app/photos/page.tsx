@@ -269,25 +269,6 @@ const PhotosPage: React.FC = () => {
           </div>
         </div>
 
-        {/* CORS Warning */}
-        <Alert className="border-yellow-200 bg-yellow-50 mx-2 sm:mx-0">
-          <AlertCircle className="h-4 w-4 text-yellow-600" />
-          <AlertDescription className="text-yellow-800 text-sm">
-            <strong>Server Setup Required:</strong> To view and download images,
-            your server needs these endpoints:
-            <br />
-            <code className="text-xs bg-yellow-100 px-1 rounded">
-              GET /files/:dir/:filename
-            </code>{" "}
-            - Serve images with proper CORS headers
-            <br />
-            <code className="text-xs bg-yellow-100 px-1 rounded">
-              GET /download/:dir/:filename
-            </code>{" "}
-            - Download files with attachment headers
-          </AlertDescription>
-        </Alert>
-
         {/* Directory Input Card */}
         <Card className="shadow-lg mx-2 sm:mx-0">
           <CardHeader className="pb-4">
