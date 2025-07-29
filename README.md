@@ -2,7 +2,6 @@
 
 A modern, full-stack photo backup application that allows users to upload multiple images with real-time progress tracking, browse photos in an elegant gallery, and download them individually or in batches. Built with Next.js and Express.js.
 
-![Photo Uploader Demo](./demo-screenshot.png)
 
 ### 🎥 Tutorial : [Click here](https://youtu.be/JsM2Vgog2sM?si=B3XBf3rSqS5yszpc)
 
